@@ -1,2 +1,3 @@
-# between-group-variance
-Comparison of differences among multiple recombinants
+# utils frequently-used
+
+Functions frequently-used in R/Python/shell language.
