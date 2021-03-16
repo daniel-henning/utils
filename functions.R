@@ -254,6 +254,29 @@ mk.proj.tree <- function(dir){
   system(paste("chmod -R 777 ",abs.dir, '/data', sep = ''))
 }
 
+
+#FUNCTION XiII.
+############################################################################
+####define a function to transform a expreesion matrix to .gct and .cls.####
+############################################################################
+expr2gsea <- function(exprSet, group, outdir = './', samp = 'sample'){
+  require(stringr)
+  Descript <- as.data.frame((rep('na', nrow(exprSet))))
+  rownames(Descript) <- rownames(exprSet)
+  colnames(Descript) <- 'DESCRIPT'
+  gct <- cbind(Descript, exprSet)
+  cls = paste(paste(ncol(exprSet)," 2 1\n#Group1 Group2\n", sep = ''),
+              paste(str_c(group, collapse = " "), '\n',sep = ' '), sep = '')
+  write.table(cls,paste(outdir, samp, '.cls', sep = ''),
+              quote = FALSE, row.names = FALSE, col.names = FALSE, sep = '')
+  header = paste("#1.2\n", paste(nrow(exprSet), ncol(exprSet), sep = '\t'), '\nNAME\tDESCRIPT\t', sep = '')
+  header = paste(header, str_c(colnames(exprSet), collapse = '\t'), sep = '')
+  write.table(header, paste(outdir, samp, '.gct', sep = ''),
+              quote = FALSE, sep = '', row.names = FALSE, col.names = FALSE)
+  write.table(gct, paste(outdir, samp, '.gct', sep = ''),
+              quote = FALSE, sep = '\t',append = TRUE,col.names = FALSE)
+}
+
 ####################################################################################
 ####       Functions to intersect or unoin multi vectors in a list object.      ####
 ####################################################################################
