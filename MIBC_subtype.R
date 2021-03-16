@@ -2,8 +2,8 @@
 ####                         consensusMIBC Subtyping Classifer                                ####
 ##################################################################################################
 MIBCSubtyping <- function(countMat, geneID = "SYMBOL", normalized = FALSE){
-  suppressMessages(require(consensusMIBC))
-  suppressMessages(require(dplyr))
+  suppressMessages(if(!require(consensusMIBC)){devtools::install_github("cit-bioinfo/consensusMIBC", build_vignettes = TRUE); require(consensusMIBC})
+  suppressMessages(if(!require(dplyr)){BiocManager::install("dplyr");require(dplyr)})
   
   if(!normalized){countMat.norm <- log2(countNormlization(round(countMat)) + 1) %>% as.data.frame()}else{countMat.norm = countMat}
   ####
